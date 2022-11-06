@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MvcMovie.Models;
 using PersonalInfo.Data;
+using PersonalInfo.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PersonalInfoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PersonalInfoContext") ?? throw new InvalidOperationException("Connection string 'PersonalInfoContext' not found.")));
@@ -9,6 +12,13 @@ builder.Services.AddDbContext<PersonalInfoContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

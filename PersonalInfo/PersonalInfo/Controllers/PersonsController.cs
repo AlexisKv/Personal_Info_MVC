@@ -20,12 +20,24 @@ namespace PersonalInfo.Controllers
         }
 
         // GET: Persons
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-              return _context.Person != null ? 
-                          View(await _context.Person.ToListAsync()) :
-                          Problem("Entity set 'PersonalInfoContext.Person'  is null.");
+            var person = from m in _context.Person
+                select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                person = person.Where(s => s.LastName!.Contains(searchString));
+            }
+
+            return View(await person.ToListAsync());
         }
+        
+        // [HttpPost]
+        // public string Index(string searchString, bool notUsed)
+        // {
+        //     return "From [HttpPost]Index: filter on " + searchString;
+        // }
 
         // GET: Persons/Details/5
         public async Task<IActionResult> Details(int? id)
