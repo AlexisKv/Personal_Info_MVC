@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PersonalInfo.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<PersonalInfoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PersonalInfoContext") ?? throw new InvalidOperationException("Connection string 'PersonalInfoContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
