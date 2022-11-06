@@ -8,10 +8,15 @@ namespace PersonalInfo.Models
     {
         public int Id { get; set; }
         
+        
         [Display(Name = "First Name")]
+        [StringLength(60, MinimumLength = 3)]
+        [Required]
         public string? FirstName { get; set; }
         
         [Display(Name = "Last Name")]
+        [StringLength(60, MinimumLength = 3)]
+        [Required]
         public string? LastName { get; set; }
         
         [Display(Name = "Birth Date")]
@@ -21,5 +26,9 @@ namespace PersonalInfo.Models
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
+
+        public string Relationship = "Single";
+        
+
     }
 }

@@ -33,11 +33,6 @@ namespace PersonalInfo.Controllers
             return View(await person.ToListAsync());
         }
         
-        // [HttpPost]
-        // public string Index(string searchString, bool notUsed)
-        // {
-        //     return "From [HttpPost]Index: filter on " + searchString;
-        // }
 
         // GET: Persons/Details/5
         public async Task<IActionResult> Details(int? id)
