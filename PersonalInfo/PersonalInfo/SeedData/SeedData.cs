@@ -28,7 +28,9 @@ namespace MvcMovie.Models
                         LastName = "Ozols",
                         BirthDate = DateTime.Parse("1989-2-12"),
                         PhoneNumber = "+371 28478021",
-                        Address = "Briviabas street 13-1"
+                        Address = "Briviabas street 13-1",
+                        IsMerriged = false,
+                        Relationship = "Single"
                     },
 
                     new Person
@@ -37,7 +39,9 @@ namespace MvcMovie.Models
                         LastName = "Saulīte",
                         BirthDate = DateTime.Parse("1999-1-12"),
                         PhoneNumber = "+371 28947655",
-                        Address = "Alas street 44-1"
+                        Address = "Alas street 44-1",
+                        IsMerriged = true,
+                        Relationship = "Olga Hļebs"
                     },
 
                     new Person
@@ -46,7 +50,9 @@ namespace MvcMovie.Models
                         LastName = "Krivecs",
                         BirthDate = DateTime.Parse("1978-4-22"),
                         PhoneNumber = "+371 28472661",
-                        Address = "Stirnu street 13-31"
+                        Address = "Stirnu street 13-31",
+                        IsMerriged = false,
+                        Relationship = "Single"
                     },
 
                     new Person
@@ -55,7 +61,9 @@ namespace MvcMovie.Models
                         LastName = "Hļebs",
                         BirthDate = DateTime.Parse("1989-2-14"),
                         PhoneNumber = "+371 28477201",
-                        Address = "Spodrības street 138-2"
+                        Address = "Spodrības street 138-2",
+                        IsMerriged = true,
+                        Relationship = "Edgars Saulīte"
                     }
                 );
                 context.SaveChanges();

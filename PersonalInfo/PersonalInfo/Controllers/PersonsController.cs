@@ -63,7 +63,7 @@ namespace PersonalInfo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,PhoneNumber,Address")] Person person)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,PhoneNumber,Address,IsMerriged,Relationship")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -90,12 +90,18 @@ namespace PersonalInfo.Controllers
             return View(person);
         }
 
+        public void OnPost(string emailAddress)
+        {
+            
+            var corrrectPerson = _context.Person.FirstOrDefault(x => x.FirstName == "Ozols").Relationship == emailAddress;
+             _context.Update(corrrectPerson);
+        }
         // POST: Persons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,BirthDate,PhoneNumber,Address")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,BirthDate,PhoneNumber,Address,IsMerriged,Relationship")] Person person)
         {
             if (id != person.Id)
             {
@@ -124,6 +130,8 @@ namespace PersonalInfo.Controllers
             }
             return View(person);
         }
+        
+        
 
         // GET: Persons/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -141,6 +149,33 @@ namespace PersonalInfo.Controllers
             }
 
             return View(person);
+        }
+        
+        [HttpPut]
+        public async Task<IActionResult> MerrigePopUp(int id, string merrigeName)
+        {
+            var person = await _context.Person.FindAsync(id);
+            person.Relationship = merrigeName;
+                
+            _context.Entry(person).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PersonExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok();
         }
 
         // POST: Persons/Delete/5
@@ -166,5 +201,6 @@ namespace PersonalInfo.Controllers
         {
           return (_context.Person?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

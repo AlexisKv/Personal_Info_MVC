@@ -1,4 +1,5 @@
 @using Microsoft.CodeAnalysis.Scripting
+@using Microsoft.EntityFrameworkCore.Query.Internal
 @model IEnumerable<PersonalInfo.Models.Person>
 
 @{
@@ -19,26 +20,26 @@
 </form>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th> Relationship
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BirthDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th> Relationship
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th></th>
-        </tr>
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
@@ -51,20 +52,38 @@
         </td>
         <td>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                @Html.DisplayFor(modelItem => item.Relationship)
+            <button type="button" class="btn btn-primary @(!string.IsNullOrEmpty(item.Relationship)  ? "pointerEventOff" : "")"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal-@item.Id">
+                @if(item.IsMerriged == false){<text>Single</text>}
+                else
+                {
+                    {<text>Merried - </text>}@Html.DisplayFor(modelItem => item.Relationship)
+                }
+                @if (string.IsNullOrEmpty(item.Relationship))
+                {
+                    <text>Select a partner</text>
+                }
+               <!--Html.DisplayFor(modelItem => item.IsMerriged == false)-->
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Married with</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                            <form method="post">
+                                <input type="text" id="EmailAddress" name="emailaddress"  value="" /> 
+                                <input type="submit">
+                            </form>
                         <div class="modal-body">
+                            <!--Html.ActionLink("MerrigePopUp","MerrigePopUp", "Persons","id=15&merrigeName=Nikita", "")-->
+                       <form action="/action_page.php">
+                         <label for="fname">First name:</label><br>
+                         <input type="text" id="fname" name="fname" value="John"><br>
+                         <label for="lname">Last name:</label><br>
+                         <input type="text" id="lname" name="lname" value="Doe"><br><br>
+                         <input type="submit" value="Submit">
+                       </form>
                             @Html.DisplayFor(modelItem => item.FirstName)
                             @Html.DisplayFor(modelItem => item.LastName)
                         </div>
