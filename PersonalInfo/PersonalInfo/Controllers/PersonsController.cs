@@ -63,7 +63,8 @@ namespace PersonalInfo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,PhoneNumber,Address,IsMerriged,Relationship")] Person person)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate," +
+                                                      "PhoneNumber,Address,IsMerriged,Relationship")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -151,12 +152,12 @@ namespace PersonalInfo.Controllers
             return View(person);
         }
         
-        [HttpPut]
-        public async Task<IActionResult> MerrigePopUp(int id, string merrigeName)
+        [HttpPost]
+        public async Task<IActionResult> MerrigePopUp([FromForm]TestRelationship relationship)
         {
-            var person = await _context.Person.FindAsync(id);
-            person.Relationship = merrigeName;
-                
+            var person = await _context.Person.FindAsync(relationship.Id);
+            person.Relationship = relationship.MerrigeName;
+            
             _context.Entry(person).State = EntityState.Modified;
 
             try
@@ -165,7 +166,7 @@ namespace PersonalInfo.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(id))
+                if (!PersonExists(relationship.Id))
                 {
                     return NotFound();
                 }
@@ -201,6 +202,12 @@ namespace PersonalInfo.Controllers
         {
           return (_context.Person?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+    
+    }
 
+    public class TestRelationship
+    {
+        public int Id { get; set; }
+        public string MerrigeName { get; set; }
     }
 }

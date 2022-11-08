@@ -1,5 +1,4 @@
-@using Microsoft.CodeAnalysis.Scripting
-@using Microsoft.EntityFrameworkCore.Query.Internal
+
 @model IEnumerable<PersonalInfo.Models.Person>
 
 @{
@@ -71,26 +70,19 @@
                 
                 <div class="modal-dialog">
                     <div class="modal-content">
-                            <form method="post">
-                                <input type="text" id="EmailAddress" name="emailaddress"  value="" /> 
-                                <input type="submit">
-                            </form>
                         <div class="modal-body">
-                            <!--Html.ActionLink("MerrigePopUp","MerrigePopUp", "Persons","id=15&merrigeName=Nikita", "")-->
-                       <form action="/action_page.php">
-                         <label for="fname">First name:</label><br>
-                         <input type="text" id="fname" name="fname" value="John"><br>
-                         <label for="lname">Last name:</label><br>
-                         <input type="text" id="lname" name="lname" value="Doe"><br><br>
-                         <input type="submit" value="Submit">
+                       <form asp-action="MerrigePopUp"  method="post">
+                         @* <label for=@item.Id>Person Id:</label><br> *@
+                         <input readonly="readonly" type="hidden" id=@item.Id name="Id" value=@item.Id><br>
+                          <label for="MerrigeName input">Spouse:</label><br>
+                         <input type="text" id="MerrigeName" name="MerrigeName"><br><br>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                             <button type="submit" class="btn btn-primary">Save changes</button>
+                         </div>
                        </form>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                            @Html.DisplayFor(modelItem => item.LastName)
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
