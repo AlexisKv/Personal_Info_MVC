@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalInfo.Data;
 
@@ -11,9 +12,11 @@ using PersonalInfo.Data;
 namespace PersonalInfo.Migrations
 {
     [DbContext(typeof(PersonalInfoContext))]
-    partial class PersonalInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20221107162346_BoolMerige")]
+    partial class BoolMerige
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,28 +24,6 @@ namespace PersonalInfo.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("PersonalInfo.Models.Addresses", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PersonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Addresses");
-                });
 
             modelBuilder.Entity("PersonalInfo.Models.Person", b =>
                 {
@@ -63,7 +44,7 @@ namespace PersonalInfo.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<bool>("IsMerriged")
+                    b.Property<bool?>("IsMerriged")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -80,18 +61,6 @@ namespace PersonalInfo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("PersonalInfo.Models.Addresses", b =>
-                {
-                    b.HasOne("PersonalInfo.Models.Person", null)
-                        .WithMany("AllAddresses")
-                        .HasForeignKey("PersonId");
-                });
-
-            modelBuilder.Entity("PersonalInfo.Models.Person", b =>
-                {
-                    b.Navigation("AllAddresses");
                 });
 #pragma warning restore 612, 618
         }

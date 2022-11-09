@@ -4,7 +4,8 @@
 namespace PersonalInfo.Models
 {
     public class Person
-    {
+    {   
+        [Key]
         public int Id { get; set; }
         
         
@@ -26,10 +27,18 @@ namespace PersonalInfo.Models
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
 
+        public List<Addresses> AllAddresses { get; set; }
+        
         [Display(Name = "Is person married?")]
         public bool IsMerriged { get; set; }
         
         public string? Relationship { get; set; }
 
+    }
+    
+    public class Addresses
+    {
+        public int Id { get; set; }
+        public string Address { get; set; }
     }
 }
