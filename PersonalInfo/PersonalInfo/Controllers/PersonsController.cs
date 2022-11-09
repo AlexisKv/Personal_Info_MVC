@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PersonalInfo.Data;
 using PersonalInfo.Models;
@@ -18,6 +13,13 @@ namespace PersonalInfo.Controllers
         {
             _context = context;
         }
+        
+        public class TestRelationship
+        {
+            public int Id { get; set; }
+            public string MerrigeName { get; set; }
+        }
+        
 
         // GET: Persons
         public async Task<IActionResult> Index(string searchString)
@@ -90,13 +92,7 @@ namespace PersonalInfo.Controllers
             }
             return View(person);
         }
-
-        public void OnPost(string emailAddress)
-        {
-            
-            var corrrectPerson = _context.Person.FirstOrDefault(x => x.FirstName == "Ozols").Relationship == emailAddress;
-             _context.Update(corrrectPerson);
-        }
+        
         // POST: Persons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -155,11 +151,14 @@ namespace PersonalInfo.Controllers
         [HttpPost]
         public async Task<IActionResult> MerrigePopUp([FromForm]TestRelationship relationship)
         {
-            var person = await _context.Person.FindAsync(relationship.Id);
-            person.Relationship = relationship.MerrigeName;
+            var persone = await _context.Person.FindAsync(relationship.Id);
+            persone.Relationship = relationship.MerrigeName;
             
-            _context.Entry(person).State = EntityState.Modified;
+            _context.Entry(persone).State = EntityState.Modified;
 
+            var person = from m in _context.Person select m;
+            
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -176,9 +175,9 @@ namespace PersonalInfo.Controllers
                 }
             }
 
-            return Ok();
+            return View("Index",await person.ToListAsync());
         }
-
+      
         // POST: Persons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -203,11 +202,5 @@ namespace PersonalInfo.Controllers
           return (_context.Person?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     
-    }
-
-    public class TestRelationship
-    {
-        public int Id { get; set; }
-        public string MerrigeName { get; set; }
     }
 }

@@ -26,8 +26,8 @@ namespace PersonalInfo.Models
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
 
-        [Display(Name = "Is person merriged?")]
-        public bool? IsMerriged { get; set; }
+        [Display(Name = "Is person married?")]
+        public bool IsMerriged { get; set; }
         
         public string? Relationship { get; set; }
 
