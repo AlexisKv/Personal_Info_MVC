@@ -9,61 +9,63 @@
 
 <h4>Person</h4>
 <hr/>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control"/>
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control"/>
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control"/>
-                <span asp-validation-for="BirthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control"/>
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control"/>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control"/>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthDate" class="control-label"></label>
+                    <input asp-for="BirthDate" class="form-control"/>
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control"/>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control"/>
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <table id="children">
-                <tbody class="more-addresses">
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control"/>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <table id="children">
+                    <tbody class="more-addresses">
 
-                <!-- This here will display the Child Row for existing Rows in the Parent model -->
-                
-                @foreach (var address in Model.AllAddresses)
-                {
-                    @Html.Partial("AllAddresses", address)
-                }
-                </tbody>
+                    <!-- This here will display the Child Row for existing Rows in the Parent model -->
 
-            </table>
-            <button type="button" id="addChild">Add Child</button>
-            <div class="form-group">
-                <label> Please tick if the person is married</label>
-                @Html.CheckBoxFor(m => m.IsMerriged)
-                <span asp-validation-for="IsMerriged" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
-            </div>
-        </form>
+                    @foreach (var address in Model.AllAddresses)
+                    {
+                        @Html.Partial("AllAddresses", address)
+                    }
+                    </tbody>
+
+                </table>
+                <button type="button" id="addChild">Add Child</button>
+                <div class="form-group">
+                    <label> Please tick if the person is married</label>
+                    @Html.CheckBoxFor(m => m.IsMerriged)
+                    <span asp-validation-for="IsMerriged" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
+}
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
@@ -72,6 +74,7 @@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 <script>
        $("#addChild").on("click", function () {
+           @{Model.AllAddresses.Add(new Addresses());}
             $.ajax({
                 url: '@Url.Action("AddAddress", "Persons")'
             }).then(function (partialView) {

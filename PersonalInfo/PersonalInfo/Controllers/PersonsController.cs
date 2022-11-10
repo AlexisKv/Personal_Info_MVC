@@ -75,7 +75,7 @@ namespace PersonalInfo.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate," +
-                             "PhoneNumber,Address,IsMerriged,Relationship, Address")] Person person, Addresses addresses)
+                             "PhoneNumber,Address,IsMerriged,Relationship, Addresses")] Person person, Addresses addresses)
         {
             if (ModelState.IsValid)
             {
@@ -219,9 +219,16 @@ namespace PersonalInfo.Controllers
         
         public ActionResult AddAddress()
         {
-            return PartialView("AllAddresses", new Addresses());
+            var address = new Addresses();
+            
+            return PartialView("AllAddresses", address);
         }
-        
+
+        public async Task<List<string>> Qwe()
+        {
+            
+            return await Task.FromResult(new List<string>{"Alberts","Aleksis","Anna"});
+        }
 
         private bool PersonExists(int id)
         {
