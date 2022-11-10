@@ -19,8 +19,14 @@ namespace PersonalInfo.Controllers
             public int Id { get; set; }
             public string MerrigeName { get; set; }
         }
-        
 
+
+
+        public Array GetAllNames()
+        {
+            return _context.Person.ToArray();
+        }
+        
         // GET: Persons
         public async Task<IActionResult> Index(string searchString)
         {
@@ -57,7 +63,10 @@ namespace PersonalInfo.Controllers
         // GET: Persons/Create
         public IActionResult Create()
         {
-            return View();
+            var person = new Person();
+            person.AllAddresses = new List<Addresses>();
+            
+            return View(person);
         }
 
         // POST: Persons/Create
@@ -66,11 +75,22 @@ namespace PersonalInfo.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate," +
-                                                      "PhoneNumber,Address,IsMerriged,Relationship")] Person person)
+                             "PhoneNumber,Address,IsMerriged,Relationship, Address")] Person person, Addresses addresses)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(person);
+               _context.Add(person);
+                //
+                // var newAddress = person.AllAddresses.Where(s => !s.IsDeleted && s.Id == 0);
+                //
+                // var updated = person.AllAddresses.Where(s => !s.IsDeleted && s.Id != 0);
+                //
+                // var deleteAddress = person.AllAddresses.Where(s => s.IsDeleted && s.Id != 0);
+                
+               // _context.Remove(deleteAddress);
+               // _context.Add(newAddress);
+               _context.Add(person);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -196,6 +216,12 @@ namespace PersonalInfo.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        
+        public ActionResult AddAddress()
+        {
+            return PartialView("AllAddresses", new Addresses());
+        }
+        
 
         private bool PersonExists(int id)
         {

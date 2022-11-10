@@ -54,6 +54,17 @@ namespace MvcMovie.Models
                         IsMerriged = false,
                         Relationship = "Single"
                     },
+                    
+                    new Person()
+                    {
+                        FirstName = "Gatis",
+                        LastName = "Kodors",
+                        BirthDate = DateTime.Parse("1993-3-19"),
+                        PhoneNumber = "+371 26055136",
+                        Address = "Junpils street 54-23",
+                        IsMerriged = false,
+                        Relationship = "Single"
+                    },
 
                     new Person
                     {

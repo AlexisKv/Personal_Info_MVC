@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BeginCollectionItemCore" Version="1.1.0" />
     <PackageReference Include="bootstrap" Version="5.2.2" />
     <PackageReference Include="jQuery" Version="3.6.1" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.13.2" />

@@ -1,0 +1,20 @@
+﻿@using HtmlHelpers.BeginCollectionItemCore
+@model Addresses
+
+@using (Html.BeginCollectionItem("Addresses"))
+{
+
+    <tr>
+    <td class="more-addresses">
+        @Html.HiddenFor(m => m.IsDeleted, new { data_is_deleted = "false" })
+        @Html.HiddenFor(m => m.Id)
+        @Html.TextBoxFor(m => m.Address )
+    </td>
+
+    <td>
+        <span class="glyphicon glyphicon-trash action-icon" data-action="removeItem"></span>
+    </td>
+
+
+    </tr>
+}

@@ -1,3 +1,4 @@
+@using Microsoft.CodeAnalysis.VisualBasic.Syntax
 @model PersonalInfo.Models.Person
 
 @{
@@ -5,10 +6,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>Person</h4>
+    <h3 class="page-info">Detailed information about the person</h3>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -41,9 +40,23 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Address)
         </dd>
+        @* @if (Model.AllAddresses.Count != null) *@
+        @* { *@
+        @*     @foreach(Addresses add in Model.AllAddresses) *@
+        @*     { *@
+        @*         <dt class = "col-sm-2"> *@
+        @*             @Html.DisplayNameFor(add => add.Address) *@
+        @*         </dt> *@
+        @*         <dd class = "col-sm-10"> *@
+        @*             @Html.DisplayFor(add => add.Address) *@
+        @*         </dd> *@
+        @*     } *@
+        @* } *@
+       
+         
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="details-button" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a class="details-button" asp-action="Index">Back to List</a>
 </div>
