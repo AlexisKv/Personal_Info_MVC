@@ -75,7 +75,7 @@ namespace PersonalInfo.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate," +
-                             "PhoneNumber,Address,IsMerriged,Relationship, Addresses")] Person person, Addresses addresses)
+                             "PhoneNumber,Address,IsMerriged,Relationship, AllAddresses")] Person person)
         {
             if (ModelState.IsValid)
             {
