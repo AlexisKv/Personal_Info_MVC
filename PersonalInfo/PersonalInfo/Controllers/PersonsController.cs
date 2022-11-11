@@ -24,6 +24,7 @@ namespace PersonalInfo.Controllers
 
         public Array GetAllNames()
         {
+            
             return _context.Person.ToArray();
         }
         
@@ -158,8 +159,7 @@ namespace PersonalInfo.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var person = await _context.Person.FirstOrDefaultAsync(m => m.Id == id);
             if (person == null)
             {
                 return NotFound();
@@ -226,8 +226,12 @@ namespace PersonalInfo.Controllers
 
         public async Task<List<string>> Qwe()
         {
+            var space = " ";
+            var allNames = _context.Person.Select(x => x.FirstName).ToList();
+            var allSurnames = _context.Person.Select(x => x.LastName).ToList();
             
-            return await Task.FromResult(new List<string>{"Alberts","Aleksis","Anna"});
+            var allFullNames = allNames.Zip(allSurnames, (n, s) => n + space + s);
+            return await Task.FromResult(allFullNames.ToList());
         }
 
         private bool PersonExists(int id)

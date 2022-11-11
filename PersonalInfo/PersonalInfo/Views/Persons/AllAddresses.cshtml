@@ -4,12 +4,16 @@
 @using (Html.BeginCollectionItem("AllAddresses"))
 {
 
-    <tr>
-    <td class="more-addresses">
-        @Html.HiddenFor(m => m.IsDeleted, new { data_is_deleted = "false" })
-        @Html.HiddenFor(m => m.Id)
-        @Html.TextBoxFor(m => m.Address )
-    </td>
+    <tr class="more-addresses">
+        <td class="more-addresses">
+            Another address
+            @Html.HiddenFor(m => m.Id)
+            <td class="input-text-box-address">
+                @Html.TextBoxFor(m => m.Address)
+            </td>
+            <br>
+            <br>
+        </td>
 
     <td>
         <span class="glyphicon glyphicon-trash action-icon" data-action="removeItem"></span>

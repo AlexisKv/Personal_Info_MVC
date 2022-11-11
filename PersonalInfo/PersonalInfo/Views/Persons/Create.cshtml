@@ -53,21 +53,22 @@
                     </tbody>
 
                 </table>
-                <button type="button" id="addChild">Add Child</button>
+                
                 <div class="form-group">
                     <label> Please tick if the person is married</label>
                     @Html.CheckBoxFor(m => m.IsMerriged)
                     <span asp-validation-for="IsMerriged" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary"/>
+                    <button type="button" class="details-button" id="addChild">Add Address</button>
+                    <input type="submit" value="Create" class="details-button"/>
                 </div>
             </form>
         </div>
     </div>
 }
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="back-to-list" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

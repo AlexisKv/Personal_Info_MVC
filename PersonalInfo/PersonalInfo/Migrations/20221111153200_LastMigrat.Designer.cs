@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalInfo.Data;
 
@@ -11,9 +12,11 @@ using PersonalInfo.Data;
 namespace PersonalInfo.Migrations
 {
     [DbContext(typeof(PersonalInfoContext))]
-    partial class PersonalInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20221111153200_LastMigrat")]
+    partial class LastMigrat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
