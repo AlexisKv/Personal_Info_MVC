@@ -50,15 +50,15 @@
             </td>
             <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn-btn-primary @(!string.IsNullOrEmpty(item.Relationship) ? "pointerEventOff" : "")"
+                <button type="button" class="btn-btn-primary @((item.IsMerriged && !string.IsNullOrEmpty(item.Relationship)) ||(item.IsMerriged == false && string.IsNullOrEmpty(item.Relationship))  ? "pointerEventOff" : "")"
                         data-bs-toggle="modal" data-bs-target="#exampleModal-@item.Id">
-                    @if (item.IsMerriged == false)
+                    @if (item.IsMerriged == false && string.IsNullOrEmpty(item.Relationship))
                     {<text>Single</text>}
                     else
                     {
                         {<text>Merried - </text>}@Html.DisplayFor(modelItem => item.Relationship)
                     }
-                    @if (string.IsNullOrEmpty(item.Relationship))
+                    @if (string.IsNullOrEmpty(item.Relationship) && item.IsMerriged == true)
                     {
                         <text>Select a partner</text>
                     }
@@ -142,7 +142,7 @@
        /*execute a function when someone clicks on the item value (DIV element):*/
        b.addEventListener("click", function(e) {
            /*insert the value for the autocomplete text field:*/
-           inp.value = this.getElementsByTagName("input")[0].value;
+           x.value = this.getElementsByTagName("input")[0].value;
            /*close the list of autocompleted values,
            (or any other open lists of autocompleted values:*/
            closeAllLists();
@@ -154,6 +154,8 @@
      })
     
      /*execute a function presses a key on the keyboard:*/
+     
+     
      inp.addEventListener("keydown", function(e) {
          var x = document.getElementById(this.id + "autocomplete-list");
          if (x) x = x.getElementsByTagName("div");

@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using PersonalInfo.Data;
-using System;
-using System.Linq;
 using PersonalInfo.Models;
 
-namespace MvcMovie.Models
+namespace PersonalInfo.SeedData
 {
     public static class SeedData
     {
@@ -30,7 +27,18 @@ namespace MvcMovie.Models
                         PhoneNumber = "+371 28478021",
                         Address = "Briviabas street 13-1",
                         IsMerriged = false,
-                        Relationship = "Single"
+                        Relationship = ""
+                    },
+                    
+                    new Person
+                    {
+                        FirstName = "Aleksandrs",
+                        LastName = "Vilciņš",
+                        BirthDate = DateTime.Parse("1991-2-22"),
+                        PhoneNumber = "+371 26819488",
+                        Address = "Hanzas street 118-2",
+                        IsMerriged = true,
+                        Relationship = ""
                     },
 
                     new Person
@@ -51,8 +59,8 @@ namespace MvcMovie.Models
                         BirthDate = DateTime.Parse("1978-4-22"),
                         PhoneNumber = "+371 28472661",
                         Address = "Stirnu street 13-31",
-                        IsMerriged = false,
-                        Relationship = "Single"
+                        IsMerriged = true,
+                        Relationship = ""
                     },
                     
                     new Person()
@@ -63,9 +71,19 @@ namespace MvcMovie.Models
                         PhoneNumber = "+371 26055136",
                         Address = "Junpils street 54-23",
                         IsMerriged = false,
-                        Relationship = "Single"
+                        Relationship = ""
                     },
 
+                    new Person
+                    {
+                        FirstName = "Inese",
+                        LastName = "Baltā",
+                        BirthDate = DateTime.Parse("1992-3-14"),
+                        PhoneNumber = "+371 26819488",
+                        Address = "Gaujas street 118-2",
+                        IsMerriged = true,
+                        Relationship = ""
+                    },
                     new Person
                     {
                         FirstName = "Olga",
@@ -75,7 +93,49 @@ namespace MvcMovie.Models
                         Address = "Spodrības street 138-2",
                         IsMerriged = true,
                         Relationship = "Edgars Saulīte"
+                    },
+                    new Person()
+                    {
+                        FirstName = "Joe",
+                        LastName = "Pink",
+                        BirthDate = DateTime.Parse("1979-1-26"),
+                        PhoneNumber = "+380 0977317184",
+                        Address = "Bunina street 13-1",
+                        IsMerriged = false,
+                        Relationship = ""
+                    },
+                    new Person()
+                    {
+                        FirstName = "Antony",
+                        LastName = "Rock",
+                        BirthDate = DateTime.Parse("2001-2-28"),
+                        PhoneNumber = "+371 28478021",
+                        Address = "Kviešu street 13-1",
+                        IsMerriged = true,
+                        Relationship = "Alise Kodora"
+                    },
+                    new Person()
+                    {
+                        FirstName = "Ingūna",
+                        LastName = "Kaupe",
+                        BirthDate = DateTime.Parse("1989-2-12"),
+                        PhoneNumber = "+371 28478021",
+                        Address = "Briviabas street 13-1",
+                        IsMerriged = false,
+                        Relationship = ""
+                    },
+                    
+                new Person()
+                    {
+                        FirstName = "Alise",
+                        LastName = "Kodora",
+                        BirthDate = DateTime.Parse("1989-2-12"),
+                        PhoneNumber = "+371 28478021",
+                        Address = "Ūlmaņa street 13-1",
+                        IsMerriged = true,
+                        Relationship = "Antony Rock"
                     }
+                    
                 );
                 context.SaveChanges();
             }

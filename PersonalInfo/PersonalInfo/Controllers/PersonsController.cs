@@ -20,8 +20,6 @@ namespace PersonalInfo.Controllers
             public string MerrigeName { get; set; }
         }
 
-
-
         public Array GetAllNames()
         {
             
@@ -172,8 +170,18 @@ namespace PersonalInfo.Controllers
         public async Task<IActionResult> MerrigePopUp([FromForm]TestRelationship relationship)
         {
             var persone = await _context.Person.FindAsync(relationship.Id);
+            
             persone.Relationship = relationship.MerrigeName;
             
+            var lastName = relationship.MerrigeName.Split(' ').Skip(1).FirstOrDefault();
+
+            var secPerson = _context.Person.FirstOrDefault(x => x.LastName == lastName);
+            
+            var willBeAdded = persone.FirstName + " " + persone.LastName;
+
+            secPerson.Relationship = willBeAdded;
+            secPerson.IsMerriged = true;
+
             _context.Entry(persone).State = EntityState.Modified;
 
             var person = from m in _context.Person select m;

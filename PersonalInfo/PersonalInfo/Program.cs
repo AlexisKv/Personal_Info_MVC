@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MvcMovie.Models;
 using PersonalInfo.Data;
 using PersonalInfo.Models;
+using PersonalInfo.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PersonalInfoContext>(options =>
