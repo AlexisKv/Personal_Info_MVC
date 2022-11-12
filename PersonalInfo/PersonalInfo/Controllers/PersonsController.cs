@@ -169,6 +169,7 @@ namespace PersonalInfo.Controllers
         [HttpPost]
         public async Task<IActionResult> MerrigePopUp([FromForm]TestRelationship relationship)
         {
+            
             var persone = await _context.Person.FindAsync(relationship.Id);
             
             persone.Relationship = relationship.MerrigeName;
@@ -179,14 +180,14 @@ namespace PersonalInfo.Controllers
             
             var willBeAdded = persone.FirstName + " " + persone.LastName;
 
-            secPerson.Relationship = willBeAdded;
-            secPerson.IsMerriged = true;
-
+            if (secPerson != null)
+            {
+                secPerson.Relationship = willBeAdded;
+                secPerson.IsMerriged = true;
+            }
+            
             _context.Entry(persone).State = EntityState.Modified;
 
-            var person = from m in _context.Person select m;
-            
-            
             try
             {
                 await _context.SaveChangesAsync();
@@ -202,8 +203,7 @@ namespace PersonalInfo.Controllers
                     throw;
                 }
             }
-
-            return View("Index",await person.ToListAsync());
+            return RedirectToAction("Index");
         }
       
         // POST: Persons/Delete/5
