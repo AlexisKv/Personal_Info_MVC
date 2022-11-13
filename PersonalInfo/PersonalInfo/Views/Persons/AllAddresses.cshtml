@@ -1,0 +1,24 @@
+﻿@using HtmlHelpers.BeginCollectionItemCore
+@model PersonalInfo.Core.Models.Addresses
+
+@using (Html.BeginCollectionItem("AllAddresses"))
+{
+
+    <tr class="more-addresses">
+        <td class="more-addresses">
+            Another address
+            @Html.HiddenFor(m => m.Id)
+            <td class="input-text-box-address">
+                @Html.TextBoxFor(m => m.Address)
+            </td>
+            <br>
+            <br>
+        </td>
+
+    <td>
+        <span class="glyphicon glyphicon-trash action-icon" data-action="removeItem"></span>
+    </td>
+
+
+    </tr>
+}

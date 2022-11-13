@@ -1,0 +1,103 @@
+@using PersonalInfo.Core.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PersonalInfo.Core.Models.Person
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Person</h4>
+<hr/>
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control"/>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control"/>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthDate" class="control-label"></label>
+                    <input asp-for="BirthDate" class="form-control"/>
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control"/>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control"/>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <table id="children">
+                    <tbody class="more-addresses">
+
+                    <!-- This here will display the Child Row for existing Rows in the Parent model -->
+
+                    @foreach (var address in Model.AllAddresses)
+                    {
+                        @Html.Partial("AllAddresses", address)
+                    }
+                    </tbody>
+
+                </table>
+
+                <div class="form-group">
+                    <label class="is-married" > Please tick if the person is married</label>
+                    @Html.CheckBoxFor(m => m.IsMerriged)
+                    <span asp-validation-for="IsMerriged" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                     <a class="details-button" asp-action="Index">Back to List</a>
+                    <button type="button" class="details-button" id="addChild">Add Address</button>
+                    <input type="submit" value="Create" class="submit-button"/>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+<script>
+       $("#addChild").on("click", function () {
+           @{Model.AllAddresses.Add(new Addresses());}
+            $.ajax({
+                url: '@Url.Action("AddAddress", "Persons")'
+            }).then(function (partialView) {
+                $('#children> tbody:last-child').append(partialView);
+            });
+       });
+       $('body').on("click", '*[data-action="removeItem"]', function (e) {
+           e.stopPropagation();
+           var btn = $(this);
+           var row = btn.closest('tr');
+           var firstCell = $(row.find('td')[0]);
+           var checkBox = firstCell.find('*[data-is-deleted]');
+           var checkBoxVal = checkBox.val();
+
+           if (checkBoxVal === 'False' || checkBox.val() === 'false') {
+               checkBox.val('true');
+               row.find('td').find('input, textarea, select').attr('readonly', 'readonly');
+           } else {
+               checkBox.val('false');
+               row.find('td').find('input, textarea, select').attr("readonly", false);
+           }
+
+       });
+</script>
+}
