@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PersonalInfo.Core.Models
 {
-    public class Person
+    public class Person : Entity
     {   
         [Key]
         public int Id { get; set; }

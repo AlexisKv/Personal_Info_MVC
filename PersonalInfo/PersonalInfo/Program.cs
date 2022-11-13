@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PersonalInfo.Core.Models;
 using PersonalInfo.Data;
-using PersonalInfo.Models;
 using PersonalInfo.SeedData;
+using PersonalInfo.Core.Services;
+using PersonalInfo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PersonalInfoContext>(options =>
@@ -19,6 +21,12 @@ using (var scope = app.Services.CreateScope())
 
     SeedData.Initialize(services);
 }
+
+builder.Services.AddScoped<IPersonalInfoDbContext, DataBaseContext>();
+builder.Services.AddScoped<IDbService, DbService>();
+builder.Services.AddScoped<IEntityService<Person>, EntityService<Person>>();
+builder.Services.AddScoped<IEntityService<Addresses>, EntityService<Addresses>>();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
