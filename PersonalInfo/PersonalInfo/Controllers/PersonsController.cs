@@ -1,24 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PersonalInfo.Core;
 using PersonalInfo.Core.Models;
-using PersonalInfo.Data;
-using PersonalInfo.Services;
 
 namespace PersonalInfo.Controllers
 {
     public class PersonsController : Controller
     {
-        private readonly PersonsService _personsService;
+        private readonly IPersonsService _personsService;
 
-        public PersonsController(PersonsService personsService)
+        public PersonsController(IPersonsService personsService)
         {
             _personsService = personsService;
-        }
-        
-        public class TestRelationship
-        {
-            public int Id { get; set; }
-            public string MerrigeName { get; set; }
         }
 
         public Array GetAllNames()
@@ -183,7 +176,7 @@ namespace PersonalInfo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_personsService.IsDbEmpty() == null)
+            if (_personsService.IsDbEmpty())
             {
                 return Problem("Entity set 'PersonalInfoContext.Person'  is null.");
             }

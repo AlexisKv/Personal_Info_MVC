@@ -1,10 +1,8 @@
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using PersonalInfo.Core;
 using PersonalInfo.Core.Models;
 using PersonalInfo.Data;
-// using PersonalInfo.SeedData;
+using PersonalInfo.SeedData;
 using PersonalInfo.Core.Services;
 using PersonalInfo.Services;
 
@@ -16,7 +14,6 @@ builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(
 
 builder.Services.AddDbContext<DataBaseContext>();
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IPersonalInfoDbContext, DataBaseContext>();
@@ -33,6 +30,13 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
 }
 
 app.UseHttpsRedirection();

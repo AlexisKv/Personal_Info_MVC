@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PersonalInfo.Core;
 using PersonalInfo.Core.Models;
 using PersonalInfo.Data;
@@ -85,6 +84,6 @@ public class PersonsService : EntityService<Person>, IPersonsService
         var allSurnames = AllLastNames();
             
         var allFullNames = allNames.Zip(allSurnames, (n, s) => n + space + s);
-        return allNames.ToList();
+        return allFullNames.ToList();
     }
 }

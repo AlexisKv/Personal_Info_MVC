@@ -31,8 +31,4 @@
     <ProjectReference Include="..\PersonalInfo.Services\PersonalInfo.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
 </Project>
