@@ -3,26 +3,29 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalInfo.Data;
 
 #nullable disable
 
-namespace PersonalInfo.Migrations
+namespace PersonalInfo.Data.Migrations
 {
-    [DbContext(typeof(PersonalInfoContext))]
-    partial class PersonalInfoContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataBaseContext))]
+    [Migration("20221113162438_FullyInitial")]
+    partial class FullyInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc.2.22472.11")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PersonalInfo.Models.Addresses", b =>
+            modelBuilder.Entity("PersonalInfo.Core.Models.Addresses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +46,7 @@ namespace PersonalInfo.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("PersonalInfo.Models.Person", b =>
+            modelBuilder.Entity("PersonalInfo.Core.Models.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,14 +84,14 @@ namespace PersonalInfo.Migrations
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("PersonalInfo.Models.Addresses", b =>
+            modelBuilder.Entity("PersonalInfo.Core.Models.Addresses", b =>
                 {
-                    b.HasOne("PersonalInfo.Models.Person", null)
+                    b.HasOne("PersonalInfo.Core.Models.Person", null)
                         .WithMany("AllAddresses")
                         .HasForeignKey("PersonId");
                 });
 
-            modelBuilder.Entity("PersonalInfo.Models.Person", b =>
+            modelBuilder.Entity("PersonalInfo.Core.Models.Person", b =>
                 {
                     b.Navigation("AllAddresses");
                 });

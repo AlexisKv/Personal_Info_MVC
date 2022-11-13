@@ -1,31 +1,38 @@
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersonalInfo.Core.Models;
 using PersonalInfo.Data;
-using PersonalInfo.SeedData;
+// using PersonalInfo.SeedData;
 using PersonalInfo.Core.Services;
 using PersonalInfo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<PersonalInfoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PersonalInfoContext") ?? throw new InvalidOperationException("Connection string 'PersonalInfoContext' not found.")));
+
+builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+));
+
+builder.Services.AddDbContext<DataBaseContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    SeedData.Initialize(services);
-}
 
 builder.Services.AddScoped<IPersonalInfoDbContext, DataBaseContext>();
 builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddScoped<IEntityService<Person>, EntityService<Person>>();
 builder.Services.AddScoped<IEntityService<Addresses>, EntityService<Addresses>>();
+
+
+
+var app = builder.Build();
+
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//
+//     SeedData.Initialize(services);
+// }
 
 
 // Configure the HTTP request pipeline.

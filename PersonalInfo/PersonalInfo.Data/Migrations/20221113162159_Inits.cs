@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace PersonalInfo.Migrations
+namespace PersonalInfo.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddressesModel : Migration
+    public partial class Inits : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
