@@ -1,6 +1,7 @@
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PersonalInfo.Core;
 using PersonalInfo.Core.Models;
 using PersonalInfo.Data;
 // using PersonalInfo.SeedData;
@@ -22,24 +23,15 @@ builder.Services.AddScoped<IPersonalInfoDbContext, DataBaseContext>();
 builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddScoped<IEntityService<Person>, EntityService<Person>>();
 builder.Services.AddScoped<IEntityService<Addresses>, EntityService<Addresses>>();
+builder.Services.AddScoped<IPersonsService, PersonsService>();
 
 
 
 var app = builder.Build();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//
-//     SeedData.Initialize(services);
-// }
-
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
